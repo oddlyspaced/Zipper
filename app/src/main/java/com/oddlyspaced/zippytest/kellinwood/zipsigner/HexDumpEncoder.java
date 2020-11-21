@@ -15,7 +15,7 @@
  */
 
 
-package com.oddlyspaced.zippytest.zipsigner;
+package com.oddlyspaced.zippytest.kellinwood.zipsigner;
 
 import java.io.IOException;
 import java.io.ByteArrayOutputStream;

@@ -26,25 +26,23 @@
  *     using signature block template files.
  */
 
-package com.oddlyspaced.zippytest.zipsigner;
+package com.oddlyspaced.zippytest.kellinwood.zipsigner;
 
 import android.content.Context;
 import android.os.Environment;
-import android.util.Log;
 
-import com.oddlyspaced.zippytest.logging.LoggerInterface;
-import com.oddlyspaced.zippytest.logging.LoggerManager;
-import com.oddlyspaced.zippytest.optional.SignatureBlockGenerator;
-import com.oddlyspaced.zippytest.zipio.ZioEntry;
-import com.oddlyspaced.zippytest.zipio.ZipInput;
-import com.oddlyspaced.zippytest.zipio.ZipOutput;
+import com.oddlyspaced.zippytest.kellinwood.logging.LoggerInterface;
+import com.oddlyspaced.zippytest.kellinwood.logging.LoggerManager;
+import com.oddlyspaced.zippytest.kellinwood.optional.SignatureBlockGenerator;
+import com.oddlyspaced.zippytest.kellinwood.zipio.ZioEntry;
+import com.oddlyspaced.zippytest.kellinwood.zipio.ZipInput;
+import com.oddlyspaced.zippytest.kellinwood.zipio.ZipOutput;
 
 import javax.crypto.Cipher;
 import javax.crypto.EncryptedPrivateKeyInfo;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import java.io.*;
-import java.lang.reflect.Method;
 import java.net.URL;
 import java.security.*;
 import java.security.cert.Certificate;

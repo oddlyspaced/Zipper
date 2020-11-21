@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.oddlyspaced.zippytest.zipio;
+package com.oddlyspaced.zippytest.kellinwood.zipio;
 
-import com.oddlyspaced.zippytest.logging.LoggerInterface;
-import com.oddlyspaced.zippytest.logging.LoggerManager;
+import com.oddlyspaced.zippytest.kellinwood.logging.LoggerInterface;
+import com.oddlyspaced.zippytest.kellinwood.logging.LoggerManager;
 
 import java.io.IOException;
 

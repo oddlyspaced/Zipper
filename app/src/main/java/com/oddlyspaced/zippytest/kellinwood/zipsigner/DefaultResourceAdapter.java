@@ -1,4 +1,4 @@
-package com.oddlyspaced.zippytest.zipsigner;
+package com.oddlyspaced.zippytest.kellinwood.zipsigner;
 
 /**
  * Default resource adapter.

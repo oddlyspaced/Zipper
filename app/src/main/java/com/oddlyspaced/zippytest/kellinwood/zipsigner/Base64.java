@@ -15,10 +15,10 @@
  */
 
 
-package com.oddlyspaced.zippytest.zipsigner;
+package com.oddlyspaced.zippytest.kellinwood.zipsigner;
 
-import com.oddlyspaced.zippytest.logging.LoggerInterface;
-import com.oddlyspaced.zippytest.logging.LoggerManager;
+import com.oddlyspaced.zippytest.kellinwood.logging.LoggerInterface;
+import com.oddlyspaced.zippytest.kellinwood.logging.LoggerManager;
 
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;

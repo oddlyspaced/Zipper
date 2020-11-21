@@ -1,4 +1,4 @@
-package com.oddlyspaced.zippytest.zipsigner;
+package com.oddlyspaced.zippytest.kellinwood.zipsigner;
 
 /*
 This file is a copy of org.bouncycastle.util.encoders.HexEncoder.

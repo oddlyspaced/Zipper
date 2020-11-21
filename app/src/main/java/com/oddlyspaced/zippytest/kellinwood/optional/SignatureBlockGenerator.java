@@ -1,6 +1,6 @@
-package com.oddlyspaced.zippytest.optional;
+package com.oddlyspaced.zippytest.kellinwood.optional;
 
-import com.oddlyspaced.zippytest.zipsigner.KeySet;
+import com.oddlyspaced.zippytest.kellinwood.zipsigner.KeySet;
 
 import org.spongycastle.cert.jcajce.JcaCertStore;
 import org.spongycastle.cms.*;

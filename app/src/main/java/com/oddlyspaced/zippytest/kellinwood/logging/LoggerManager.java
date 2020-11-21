@@ -13,12 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.oddlyspaced.zippytest.zipsigner;
+package com.oddlyspaced.zippytest.kellinwood.logging;
 
-public interface ProgressListener {
+import java.util.Map;
+import java.util.TreeMap;
 
-    /** Called to notify the listener that progress has been made during
-        the zip signing operation.
-     */
-    public void onProgress( ProgressEvent event);
+public class LoggerManager {
+
+	static LoggerFactory factory = new NullLoggerFactory();
+	
+	static Map<String,LoggerInterface> loggers = new TreeMap<String,LoggerInterface>();
+	
+	public static void setLoggerFactory( LoggerFactory f) {
+		factory = f;
+	}
+	
+	public static LoggerInterface getLogger(String category) {
+		
+		LoggerInterface logger = loggers.get( category);
+		if (logger == null) {
+			logger = factory.getLogger(category);
+			loggers.put( category, logger);
+		}
+		return logger;
+	}
 }

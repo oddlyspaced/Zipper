@@ -1,4 +1,4 @@
-package com.oddlyspaced.zippytest.zipsigner;
+package com.oddlyspaced.zippytest.kellinwood.zipsigner;
 
 /**
  * Interface to obtain internationalized strings for the progress events.

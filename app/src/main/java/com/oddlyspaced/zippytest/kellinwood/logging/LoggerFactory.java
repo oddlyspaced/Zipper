@@ -13,11 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.oddlyspaced.zippytest.logging;
+package com.oddlyspaced.zippytest.kellinwood.logging;
 
-public class ConsoleLoggerFactory implements LoggerFactory {
+public interface LoggerFactory {
 
-	public LoggerInterface getLogger(String category) {
-		return new StreamLogger( category, System.out);
-	}
+	public LoggerInterface getLogger( String category);
 }

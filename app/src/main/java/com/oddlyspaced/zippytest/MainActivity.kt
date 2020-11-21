@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.util.Log
 import android.widget.Toast
-import com.oddlyspaced.zippytest.zipsigner.ZipSigner
+import com.oddlyspaced.zippytest.kellinwood.zipsigner.ZipSigner
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
