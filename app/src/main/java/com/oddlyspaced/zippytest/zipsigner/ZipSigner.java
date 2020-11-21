@@ -28,11 +28,11 @@
 
 package com.oddlyspaced.zippytest.zipsigner;
 
-import kellinwood.logging.LoggerInterface;
-import kellinwood.logging.LoggerManager;
-import kellinwood.zipio.ZioEntry;
-import kellinwood.zipio.ZipInput;
-import kellinwood.zipio.ZipOutput;
+import com.oddlyspaced.zippytest.logging.LoggerInterface;
+import com.oddlyspaced.zippytest.logging.LoggerManager;
+import com.oddlyspaced.zippytest.zipio.ZioEntry;
+import com.oddlyspaced.zippytest.zipio.ZipInput;
+import com.oddlyspaced.zippytest.zipio.ZipOutput;
 
 import javax.crypto.Cipher;
 import javax.crypto.EncryptedPrivateKeyInfo;
@@ -49,7 +49,6 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.*;
-import java.util.Base64;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
@@ -148,7 +147,7 @@ public class ZipSigner
     }
 
     
-    protected String autoDetectKey( String mode, Map<String,ZioEntry> zioEntries) 
+    protected String autoDetectKey( String mode, Map<String, ZioEntry> zioEntries)
         throws NoSuchAlgorithmException, IOException 
     {
         boolean debug = getLogger().isDebugEnabled();
@@ -427,7 +426,7 @@ public class ZipSigner
                     if (inAttr != null) attr = new Attributes( inAttr);
                 }
                 if (attr == null) attr = new Attributes();
-                attr.putValue("SHA1-Digest", java.util.Base64.encode(md.digest()));
+                attr.putValue("SHA1-Digest", Base64.encode(md.digest()));
                 output.getEntries().put(name, attr);
             }
         }
@@ -453,7 +452,7 @@ public class ZipSigner
         manifest.write(print);
         print.flush();
 
-        out.write( ("SHA1-Digest-Manifest: "+ java.util.Base64.encode(md.digest()) + "\r\n\r\n").getBytes());
+        out.write( ("SHA1-Digest-Manifest: "+ Base64.encode(md.digest()) + "\r\n\r\n").getBytes());
 
         Map<String, Attributes> entries = manifest.getEntries();
         for (Map.Entry<String, Attributes> entry : entries.entrySet()) {
@@ -644,17 +643,8 @@ public class ZipSigner
         progressHelper.initProgress();        
         progressHelper.progress( ProgressEvent.PRORITY_IMPORTANT, resourceAdapter.getString(ResourceAdapter.Item.PARSING_CENTRAL_DIRECTORY));
         
-        ZipInput input = null;
-        OutputStream outStream = null;
-        try {
-            input = ZipInput.read( inputZipFilename);
-            outStream = new FileOutputStream( outputZipFilename);
-            signZip(input.getEntries(), outStream, outputZipFilename);
-        }
-        finally {
-            if(input != null) input.close();
-            if(outStream != null) outStream.close();
-        }
+        ZipInput input = ZipInput.read( inputZipFilename);
+        signZip( input.getEntries(), new FileOutputStream( outputZipFilename), outputZipFilename);
     }
     
     /** Sign the 
@@ -757,7 +747,7 @@ public class ZipSigner
             
         }
         finally {
-            if (zipOutput != null) zipOutput.close();
+            zipOutput.close();
             if (canceled) {
                 try {
                     if (outputZipFilename != null) new File( outputZipFilename).delete();

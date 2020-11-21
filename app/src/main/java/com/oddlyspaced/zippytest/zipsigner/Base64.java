@@ -17,12 +17,12 @@
 
 package com.oddlyspaced.zippytest.zipsigner;
 
+import com.oddlyspaced.zippytest.logging.LoggerInterface;
+import com.oddlyspaced.zippytest.logging.LoggerManager;
+
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
-
-import kellinwood.logging.LoggerInterface;
-import kellinwood.logging.LoggerManager;
 
 /*
  * This class provides Base64 encoding services using one of several possible 
@@ -50,7 +50,7 @@ public class Base64 {
     static Method bDecodeMethod = null;  // Reference to the bEncoder.encode() method, if available    
     
     static LoggerInterface logger = null;
-    
+
     static {
         
         Class<Object> clazz;
