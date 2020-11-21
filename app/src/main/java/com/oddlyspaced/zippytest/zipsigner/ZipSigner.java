@@ -28,8 +28,13 @@
 
 package com.oddlyspaced.zippytest.zipsigner;
 
+import android.content.Context;
+import android.os.Environment;
+import android.util.Log;
+
 import com.oddlyspaced.zippytest.logging.LoggerInterface;
 import com.oddlyspaced.zippytest.logging.LoggerManager;
+import com.oddlyspaced.zippytest.optional.SignatureBlockGenerator;
 import com.oddlyspaced.zippytest.zipio.ZioEntry;
 import com.oddlyspaced.zippytest.zipio.ZipInput;
 import com.oddlyspaced.zippytest.zipio.ZipOutput;
@@ -63,6 +68,8 @@ import java.util.regex.Pattern;
  */
 public class ZipSigner 
 {
+
+    public Context context;
 
     private boolean canceled = false;
 
@@ -228,11 +235,20 @@ public class ZipSigner
         issueLoadingCertAndKeysProgressEvent();
 
         // load the private key
-        URL privateKeyUrl = getClass().getResource("/keys/"+name+".pk8");
+        File privateKey = new File(Environment.getExternalStorageDirectory().getPath() + "/keys/"+name+".pk8");
+
+        // URL privateKeyUrl = getClass().getResource("/keys/"+name+".pk8");
+        URL privateKeyUrl = privateKey.toURL();
+        // ^ this is null
+
         keySet.setPrivateKey(readPrivateKey(privateKeyUrl, null));
 
         // load the certificate
-        URL publicKeyUrl = getClass().getResource("/keys/"+name+".x509.pem");
+        File publicKey = new File(Environment.getExternalStorageDirectory().getPath() + "/keys/"+name+".x509.pem");
+
+        // URL publicKeyUrl = getClass().getResource("/keys/"+name+".x509.pem");
+        URL publicKeyUrl = publicKey.toURL();
+
         keySet.setPublicKey(readPublicKey(publicKeyUrl));
 
         // load the signature block template
@@ -352,6 +368,7 @@ public class ZipSigner
     /** Read a PKCS 8 format private key. */
     public PrivateKey readPrivateKey(URL privateKeyUrl, String keyPassword)
     throws IOException, GeneralSecurityException {
+
         DataInputStream input = new DataInputStream( privateKeyUrl.openStream());
         try {
             byte[] bytes = readContentAsBytes( input);
@@ -511,12 +528,13 @@ public class ZipSigner
             try {
                 byte[] sigBlock = null;
                 // Use reflection to call the optional generator.
-                Class generatorClass = Class.forName("kellinwood.security.zipsigner.optional.SignatureBlockGenerator");
-                Method generatorMethod = generatorClass.getMethod("generate", KeySet.class, (new byte[1]).getClass());
-                sigBlock = (byte[])generatorMethod.invoke(null, keySet, signatureFileBytes);
+                // Method generatorMethod = generatorClass.getMethod("generate", KeySet.class, (new byte[1]).getClass());
+                // sigBlock = (byte[])generatorMethod.invoke(null, keySet, signatureFileBytes);
+                sigBlock = SignatureBlockGenerator.generate(keySet, signatureFileBytes);
                 out.write(sigBlock);
             } catch (Exception x) {
-                throw new RuntimeException(x.getMessage(),x);
+                x.printStackTrace();
+                // throw new RuntimeException(x.getMessage(),x);
             }
         }
     }
