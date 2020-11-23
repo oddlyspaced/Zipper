@@ -1,14 +1,12 @@
 package com.oddlyspaced.zippytest
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.oddlyspaced.zippytest.kellinwood.zipsigner.ZipSigner
 import java.io.File
-import java.io.FileOutputStream
-import java.util.zip.ZipOutputStream
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,6 +14,29 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         // testSign()
         // zipFiles()
+        copyTemplate()
+    }
+
+    /*
+    Steps :
+    1. Unpack assets to a safe location
+    2. <Apply mods to icon>
+    3. Zip the apk asset
+    4. Sign the zip
+    5. Rename extension to .apk
+     */
+
+    private fun copyTemplate() {
+        try {
+            val templateFile = assets.open("template.zip")
+            val outFile = File(applicationContext.externalCacheDir!!.path + "/template.zip")
+            templateFile.copyTo(outFile.outputStream())
+            templateFile.close()
+        }
+        catch (e: Exception) {
+            Log.e("MAIN", e.toString())
+            e.printStackTrace()
+        }
     }
 
     private fun zipFiles() {
