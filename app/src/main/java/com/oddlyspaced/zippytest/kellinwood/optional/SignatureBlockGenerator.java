@@ -5,12 +5,14 @@ import com.oddlyspaced.zippytest.kellinwood.zipsigner.KeySet;
 import org.spongycastle.cert.jcajce.JcaCertStore;
 import org.spongycastle.cms.*;
 import org.spongycastle.cms.jcajce.JcaSignerInfoGeneratorBuilder;
+import org.spongycastle.jce.provider.BouncyCastleProvider;
 import org.spongycastle.operator.ContentSigner;
 import org.spongycastle.operator.DigestCalculatorProvider;
 import org.spongycastle.operator.jcajce.JcaContentSignerBuilder;
 import org.spongycastle.operator.jcajce.JcaDigestCalculatorProviderBuilder;
 import org.spongycastle.util.Store;
 
+import java.security.Security;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +35,8 @@ public class SignatureBlockGenerator {
             Store certs = new JcaCertStore(certList);
 
             CMSSignedDataGenerator gen = new CMSSignedDataGenerator();
+
+            Security.addProvider(new BouncyCastleProvider());
 
             JcaContentSignerBuilder jcaContentSignerBuilder = new JcaContentSignerBuilder(keySet.getSignatureAlgorithm()).setProvider("SC");
             ContentSigner sha1Signer = jcaContentSignerBuilder.build(keySet.getPrivateKey());
