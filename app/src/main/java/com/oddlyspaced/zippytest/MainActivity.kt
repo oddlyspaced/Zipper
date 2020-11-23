@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.oddlyspaced.zippytest.kellinwood.zipsigner.ZipSigner
+import org.zeroturnaround.zip.ZipUtil
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
@@ -14,7 +15,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         // testSign()
         // zipFiles()
-        copyTemplate()
+        // copyTemplate()
+        // ZipUtil.explode(File(applicationContext.externalCacheDir!!.path, "template.zip"))
+        // ZipUtil.pack(File(applicationContext.externalCacheDir!!.path, "ttep"), File(applicationContext.externalCacheDir!!.path, "wow.zip"));
     }
 
     /*
@@ -32,15 +35,10 @@ class MainActivity : AppCompatActivity() {
             val outFile = File(applicationContext.externalCacheDir!!.path + "/template.zip")
             templateFile.copyTo(outFile.outputStream())
             templateFile.close()
-        }
-        catch (e: Exception) {
+        } catch (e: Exception) {
             Log.e("MAIN", e.toString())
             e.printStackTrace()
         }
-    }
-
-    private fun zipFiles() {
-        FileZipper.zipFolder(Environment.getExternalStorageDirectory().path + "/apk/hello", Environment.getExternalStorageDirectory().path + "/apk/hello.zip")
     }
 
     private fun testSign() {
@@ -51,58 +49,15 @@ class MainActivity : AppCompatActivity() {
             zipSigner.keymode = "testkey"
 
             val inpFile = File(Environment.getExternalStorageDirectory().path + "/apk/sample.zip")
-            val outFile = File(Environment.getExternalStorageDirectory().path + "/apk/sample-signed.zip")
+            val outFile =
+                File(Environment.getExternalStorageDirectory().path + "/apk/sample-signed.zip")
             zipSigner.signZip(inpFile.path, outFile.path)
             Toast.makeText(applicationContext, "SUCCESS", Toast.LENGTH_LONG).show()
-        }
-        catch (e: Exception) {
+        } catch (e: Exception) {
             Toast.makeText(applicationContext, "ERROR", Toast.LENGTH_LONG).show()
             Log.e("ERROR", e.toString())
             e.printStackTrace()
         }
 
     }
-
-    /*
-      static public void zipFolder(String srcFolder, String destZipFile)
-            throws Exception {
-        ZipOutputStream zip = null;
-        FileOutputStream fileWriter = null;
-        fileWriter = new FileOutputStream(destZipFile);
-        zip = new ZipOutputStream(fileWriter);
-        addFolderToZip("", srcFolder, zip);
-        zip.flush();
-        zip.close();
-    }
-
-    static private void addFileToZip(String path, String srcFile,
-                                     ZipOutputStream zip) throws Exception {
-        File folder = new File(srcFile);
-        if (folder.isDirectory()) {
-            addFolderToZip(path, srcFile, zip);
-        } else {
-            byte[] buf = new byte[1024];
-            int len;
-            FileInputStream in = new FileInputStream(srcFile);
-            zip.putNextEntry(new ZipEntry(path + "/" + folder.getName()));
-            while ((len = in.read(buf)) > 0) {
-                zip.write(buf, 0, len);
-            }
-        }
-    }
-
-    static private void addFolderToZip(String path, String srcFolder,
-                                       ZipOutputStream zip) throws Exception {
-        File folder = new File(srcFolder);
-        for (String fileName : folder.list()) {
-            if (path.equals("")) {
-                addFileToZip(folder.getName(), srcFolder + "/" + fileName, zip);
-            } else {
-                addFileToZip(path + "/" + folder.getName(), srcFolder + "/"
-                        + fileName, zip);
-            }
-        }
-    }
-     */
-
 }
